@@ -7,19 +7,25 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/login', [AuthController::class, 'loginUser'])->name('user.login');
+Route::get('/login', [AuthController::class, 'loginUser'])->name('login');
 Route::get('/admin/login', [AuthController::class, 'loginAdmin'])->name('admin.login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/products', [ProductController::class, 'productIndex']);
+Route::get('/product/{id}', [ProductController::class, 'detailProduct'])->name('product-detail');
 
 Route::middleware('auth')->group(function () {
     Route::get('/my-profile', [AuthController::class, 'myProfile'])->name('my-profile');
     Route::post('/my-profile', [AuthController::class, 'updateProfile'])->name('update-profile');
     Route::get('/keranjang', [HomeController::class, 'keranjang'])->name('keranjang');
+    Route::post('/update-keranjang', [HomeController::class, 'updateKeranjang'])->name('update-keranjang');
+    Route::get('/tambahkan-keranjang', [HomeController::class, 'addToCart'])->name('tambahkan-keranjang');
+    Route::get('/masukkan-wishlist', [HomeController::class, 'addToWishlist'])->name('masukkan-wishlist');
+    Route::get('/hapus-wishlist', [HomeController::class, 'removeFromWishlist'])->name('hapus-wishlist');
     Route::get('/checkout', [HomeController::class, 'checkout'])->name('checkout');
+    Route::post('/checkout', [HomeController::class, 'processCheckout'])->name('processCheckout');
 });
 
 Route::prefix('admin')->middleware('auth')->group(function () {

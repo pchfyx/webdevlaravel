@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Wishlist;
+use App\Models\WishlistItem;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -17,7 +19,19 @@ class ProductController extends Controller
         }
         $products = $products->get();
         $categories = Category::all();
-        return view('products.index', compact('products', 'categories'));
+        $arrayWishlist = WishlistItem::whereHas('wishlist', function ($query) {
+            $query->where('user_id', auth()->id());
+        })->pluck('product_id')->toArray();
+        return view('products.index', compact('products', 'categories', 'arrayWishlist'));
+    }
+
+    public function detailProduct()
+    {
+        $product = Product::find(request('id'));
+        $arrayWishlist = WishlistItem::whereHas('wishlist', function ($query) {
+            $query->where('user_id', auth()->id());
+        })->pluck('product_id')->toArray();
+        return view('products.detail', compact('product', 'arrayWishlist'));
     }
 
     public function index(Request $request)

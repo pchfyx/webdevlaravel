@@ -96,15 +96,26 @@
                                             @endif
                                         </div>
                                         <div class="prd-bottom">
-                                            <a href="" class="social-info">
+                                            <a href="{{ route('tambahkan-keranjang', ['product_id' => $product->id, 'qty' => 1]) }}"
+                                                class="social-info">
                                                 <span class="ti-bag"></span>
                                                 <p class="hover-text">add to bag</p>
                                             </a>
-                                            <a href="" class="social-info">
-                                                <span class="lnr lnr-heart"></span>
-                                                <p class="hover-text">Wishlist</p>
-                                            </a>
-                                            <a href="" class="social-info">
+                                            @if (in_array($product->id, $arrayWishlist))
+                                                <a href="{{ route('hapus-wishlist', ['product_id' => $product->id]) }}"
+                                                    class="social-info">
+                                                    <span class="lnr lnr-heart"></span>
+                                                    <p class="hover-text">Remove Wishlist</p>
+                                                </a>
+                                            @else
+                                                <a href="{{ route('masukkan-wishlist', ['product_id' => $product->id]) }}"
+                                                    class="social-info">
+                                                    <span class="lnr lnr-heart"></span>
+                                                    <p class="hover-text">Wishlist</p>
+                                                </a>
+                                            @endif
+                                            <a href="{{ route('product-detail', ['id' => $product->id]) }}"
+                                                class="social-info">
                                                 <span class="lnr lnr-move"></span>
                                                 <p class="hover-text">view more</p>
                                             </a>
