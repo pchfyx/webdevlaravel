@@ -53,7 +53,7 @@ class ProductController extends Controller
             'size' => 'required',
             'price' => 'required',
             'description' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif'
         ]);
 
         $imagePath = $request->file('image')->store('images', 'public');
@@ -62,7 +62,7 @@ class ProductController extends Controller
             'name' => $request->name,
             'size' => $request->size,
             'price' => $request->price,
-            'discount' => $request->discount,
+            'discount' => $request->discount ?? 0,
             'description' => $request->description,
             'category_id' => $request->category_id,
             'image' => $imagePath, // Simpan path gambar
@@ -87,24 +87,20 @@ class ProductController extends Controller
             'description' => 'required',
             'category_id' => 'required',
         ]);
-        try {
-            $product = Product::find($id);
-            $fields = [
-                'name' => $request->name,
-                'size' => $request->size,
-                'price' => $request->price,
-                'discount' => $request->discount,
-                'description' => $request->description,
-                'category_id' => $request->category_id,
-            ];
+        $product = Product::find($id);
+        $fields = [
+            'name' => $request->name,
+            'size' => $request->size,
+            'price' => $request->price,
+            'discount' => $request->discount ?? 0,
+            'description' => $request->description,
+            'category_id' => $request->category_id,
+        ];
 
-            if ($request->file('image')) {
-                $fields['image'] = $request->file('image')->store('images', 'public');
-            }
-            $product->update($fields);
-        } catch (\Throwable $th) {
-            dd($th);
+        if ($request->file('image')) {
+            $fields['image'] = $request->file('image')->store('images', 'public');
         }
+        $product->update($fields);
         return redirect()->route('products')->with('success', 'Product updated successfully');
     }
 

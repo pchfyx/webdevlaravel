@@ -29,6 +29,14 @@ class HomeController extends Controller
         return view('keranjang.index', $data);
     }
 
+    public function wishlist()
+    {
+        $data['wishlistItems'] = WishlistItem::whereHas('wishlist', function ($query) {
+            $query->where('user_id', auth()->id());
+        })->get();
+        return view('wishlist.index', $data);
+    }
+
     public function addToCart()
     {
         $cart = Cart::where('user_id', auth()->id())->first();

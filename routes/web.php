@@ -20,6 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/my-profile', [AuthController::class, 'myProfile'])->name('my-profile');
     Route::post('/my-profile', [AuthController::class, 'updateProfile'])->name('update-profile');
     Route::get('/keranjang', [HomeController::class, 'keranjang'])->name('keranjang');
+    Route::get('/wishlist', [HomeController::class, 'wishlist'])->name('wishlist');
     Route::post('/update-keranjang', [HomeController::class, 'updateKeranjang'])->name('update-keranjang');
     Route::get('/tambahkan-keranjang', [HomeController::class, 'addToCart'])->name('tambahkan-keranjang');
     Route::get('/masukkan-wishlist', [HomeController::class, 'addToWishlist'])->name('masukkan-wishlist');

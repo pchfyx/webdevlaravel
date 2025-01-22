@@ -52,6 +52,7 @@
                                                 $subtotal += $total;
                                             } else {
                                                 $total = $item->product->price * $item->quantity;
+                                                $total_potongan = $item->product->price;
                                                 $subtotal += $total;
                                             }
                                         @endphp
