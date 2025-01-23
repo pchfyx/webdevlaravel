@@ -36,31 +36,55 @@
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
+                            @error('category_id')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Name"
+                                value="{{ old('name') }}">
+                            @error('name')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="size">Size</label>
-                            <input type="text" class="form-control" id="size" name="size" placeholder="Size">
+                            <input type="text" class="form-control" id="size" name="size" placeholder="Size"
+                                value="{{ old('size') }}">
+                            @error('size')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="price">Price</label>
-                            <input type="number" class="form-control" id="price" name="price" placeholder="Price">
+                            <input type="number" class="form-control" id="price" name="price" placeholder="Price"
+                                value="{{ old('price') }}">
+                            @error('price')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="image">Image</label>
                             <input type="file" class="form-control" id="image" name="image">
+                            @error('image')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="discount">Discount %(Optional)</label>
-                            <input type="number" class="form-control" id="discount" name="discount"
-                                placeholder="Discount">
+                            <input type="number" class="form-control" id="discount" name="discount" placeholder="Discount"
+                                value="{{ old('discount') }}">
+                            @error('discount')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="description">Description</label>
-                            <textarea name="description" class="form-control" id="description"></textarea>
+                            <textarea name="description" class="form-control" id="description">{{ old('description') }}</textarea>
+                            @error('description')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
 

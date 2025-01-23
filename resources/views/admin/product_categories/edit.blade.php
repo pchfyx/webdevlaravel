@@ -33,6 +33,9 @@
                             <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" name="name" placeholder="Name"
                                 value="{{ $category->name }}">
+                            @error('name')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
 

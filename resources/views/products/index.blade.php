@@ -27,13 +27,22 @@
                             <li class="main-nav-list child text-center">
                                 No Data
                             </li>
-                        @endif
-                        @foreach ($categories as $category)
-                            <li class="main-nav-list child"><a
-                                    href="/products?category_id='{{ $category->id }}'">{{ $category->name }}<span
-                                        class="number">({{ $category->products->count() }})</span></a>
+                        @else
+                            <li class="main-nav-list child">
+                                <a href="/products" class="{{ request('category_id') ? '' : 'active' }}">All Category
+                                    <span class="number">({{ $all_products->count() }})</span>
+                                </a>
                             </li>
-                        @endforeach
+                            @foreach ($categories as $category)
+                                <li class="main-nav-list child">
+                                    <a href="/products?category_id={{ $category->id }}"
+                                        class="{{ request('category_id') == $category->id ? 'active' : '' }}">
+                                        {{ $category->name }}
+                                        <span class="number">({{ $category->products->count() }})</span>
+                                    </a>
+                                </li>
+                            @endforeach
+                        @endif
                     </ul>
                 </div>
             </div>
@@ -47,11 +56,11 @@
                         </div>
                         <div class="sorting text-white">
                             <label for="start_price">Start Price</label>
-                            <input type="number" name="start_price" id="start_price">
+                            <input type="number" name="start_price" id="start_price" value="{{ request('start_price') }}">
                         </div>
                         <div class="sorting text-white">
                             <label for="end_price">End Price</label>
-                            <input type="number" name="end_price" id="end_price">
+                            <input type="number" name="end_price" id="end_price" value="{{ request('end_price') }}">
                         </div>
                         <div class="sorting text-white">
                             <button type="submit" class="btn btn-sm btn-primary">Search</button>

@@ -13,16 +13,32 @@ class ProductController extends Controller
     public function productIndex()
     {
         $keyword = request('keyword');
+        $start_price = request('start_price');
+        $end_price = request('end_price');
+        $category_id = request('category_id');
         $products = Product::query();
         if ($keyword) {
             $products = $products->where('name', 'LIKE', "%$keyword%");
         }
+        if ($start_price) {
+            $products = $products->where('price', '>=', $start_price);
+        }
+
+        if ($end_price) {
+            $products = $products->where('price', '<=', $end_price);
+        }
+
+        if ($category_id) {
+            $products = $products->where('category_id', $category_id);
+        }
+
         $products = $products->get();
         $categories = Category::all();
+        $all_products = Product::all();
         $arrayWishlist = WishlistItem::whereHas('wishlist', function ($query) {
             $query->where('user_id', auth()->id());
         })->pluck('product_id')->toArray();
-        return view('products.index', compact('products', 'categories', 'arrayWishlist'));
+        return view('products.index', compact('products', 'categories', 'arrayWishlist', 'all_products'));
     }
 
     public function detailProduct()
@@ -49,6 +65,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'category_id' => 'required',
             'name' => 'required',
             'size' => 'required',
             'price' => 'required',

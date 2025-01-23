@@ -38,34 +38,55 @@
                                         {{ $category->name }}</option>
                                 @endforeach
                             </select>
+                            @error('category_id')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" name="name" placeholder="Name"
                                 value="{{ $product->name }}">
+                            @error('name')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="size">Size</label>
                             <input type="text" class="form-control" id="size" name="size" placeholder="Size"
                                 value="{{ $product->size }}">
+                            @error('size')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="price">Price</label>
                             <input type="number" class="form-control" id="price" name="price" placeholder="Price"
                                 value="{{ $product->price }}">
+                            @error('price')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="image">Image</label>
                             <input type="file" class="form-control" id="image" name="image">
+                            @error('image')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="discount">Discount %(Optional)</label>
                             <input type="number" class="form-control" id="discount" name="discount" placeholder="Discount"
                                 value="{{ $product->discount }}">
+                            @error('discount')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label for="description">Description</label>
                             <textarea name="description" class="form-control" id="description">{{ $product->description }}</textarea>
+                            @error('description')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
 

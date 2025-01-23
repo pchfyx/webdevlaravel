@@ -8,8 +8,10 @@ use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/login', [AuthController::class, 'loginUser'])->name('login');
+Route::get('/register', [AuthController::class, 'registerUser'])->name('register');
 Route::get('/admin/login', [AuthController::class, 'loginAdmin'])->name('admin.login');
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -31,6 +33,8 @@ Route::middleware('auth')->group(function () {
 
 Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/my-profile', [AuthController::class, 'adminMyProfile'])->name('admin.my-profile');
+    Route::post('/my-profile', [AuthController::class, 'adminUpdateProfile'])->name('admin.update-profile');
 
     Route::prefix('/product-category')->controller(ProductCategoryController::class)->group(function () {
         Route::get('/', 'index')->name('product-category');
