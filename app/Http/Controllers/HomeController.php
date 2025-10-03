@@ -2,25 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cart;
-use App\Models\CartItem;
-use App\Models\Category;
-use App\Models\Order;
-use App\Models\OrderItem;
-use App\Models\Product;
-use App\Models\Wishlist;
-use App\Models\WishlistItem;
 use Illuminate\Http\Request;
+use App\Services\FirebaseService;
 
 class HomeController extends Controller
 {
+    protected $firebase;
+
+    public function __construct(FirebaseService $firebase)
+    {
+        $this->firebase = $firebase;
+    }
+
     public function index()
     {
-        $categories = Category::all();
-        $arrayWishlist = WishlistItem::whereHas('wishlist', function ($query) {
-            $query->where('user_id', auth()->id());
-        })->pluck('product_id')->toArray();
-        return view('home', compact('categories', 'arrayWishlist'));
+        $categories = $this->firebase->getCollection('categories');
+        $wishlist = $this->firebase->getUserWishlist(auth()->id());
+        return view('home', compact('categories', 'wishlist'));
     }
 
     public function keranjang()
